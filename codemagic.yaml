@@ -1,6 +1,6 @@
 workflows:
   ios:
-    name: Build iOS
+    name: Build and Publish iOS
     max_build_duration: 60
     scripts:
       - npm install -g ionic
@@ -10,11 +10,12 @@ workflows:
     artifacts:
       - build/ios/*.ipa
     publishing:
-      - destination: store
-        credentials: $APP_STORE_CONNECT_API_KEY
-        app_id: $APP_STORE_APP_ID
+      provider: app_store_connect
+      api_key: $APP_STORE_CONNECT_API_KEY
+      app_id: $APP_STORE_APP_ID
+      upload_method: auto
   android:
-    name: Build Android
+    name: Build and Publish Android
     max_build_duration: 60
     scripts:
       - npm install -g ionic
@@ -24,6 +25,7 @@ workflows:
     artifacts:
       - build/android/*.apk
     publishing:
-      - destination: play_store
-        credentials: $PLAY_STORE_JSON_KEY
-        app_id: $PLAY_STORE_APP_ID
+      provider: google_play
+      json_key: $PLAY_STORE_JSON_KEY
+      app_id: $PLAY_STORE_APP_ID
+      upload_method: auto
