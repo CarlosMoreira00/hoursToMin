@@ -1,13 +1,29 @@
 workflows:
   ios:
-    name: iOS Workflow
+    name: Build iOS
     max_build_duration: 60
     scripts:
-      - flutter pub get
-      - ionic build --prod
-    android:
-      - flutter build apk --release
-    ios:
-      - flutter build ios --release
-      - flutter test
-      - flutter build ios --release
+      - npm install -g ionic
+      - npm install
+      - ionic build --prod --platform ios
+      - ionic capacitor build ios
+    artifacts:
+      - build/ios/*.ipa
+    publishing:
+      - destination: store
+        credentials: $APP_STORE_CONNECT_API_KEY
+        app_id: $APP_STORE_APP_ID
+  android:
+    name: Build Android
+    max_build_duration: 60
+    scripts:
+      - npm install -g ionic
+      - npm install
+      - ionic build --prod --platform android
+      - ionic capacitor build android
+    artifacts:
+      - build/android/*.apk
+    publishing:
+      - destination: play_store
+        credentials: $PLAY_STORE_JSON_KEY
+        app_id: $PLAY_STORE_APP_ID
