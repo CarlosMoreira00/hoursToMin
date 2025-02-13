@@ -1,0 +1,7 @@
+{
+  "name": "hoursToMin",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
